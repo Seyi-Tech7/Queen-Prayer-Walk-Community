@@ -1,0 +1,365 @@
+import { DEFAULT_PHOTOS } from './mediaLibrary';
+import type { SiteContent } from './types';
+
+export const defaultSiteContent: SiteContent = {
+  header: {
+    brandName: 'Queen Prayer Walking',
+    brandTagline: 'Community · Faith in motion',
+    showBrandIcon: true,
+    navItems: [
+      { id: 'home', label: 'Home', href: '/', enabled: true },
+      { id: 'about', label: 'About', href: '/about', enabled: true },
+      { id: 'practice', label: 'The practice', href: '/practice', enabled: true },
+      { id: 'sisterhood', label: 'Sisterhood', href: '/sisterhood', enabled: true },
+      { id: 'meetings', label: 'Meetings', href: '/meetings', enabled: true },
+      { id: 'news', label: 'News', href: '/news', enabled: true },
+      { id: 'books', label: 'Books', href: '/books', enabled: true },
+    ],
+    ctaButton: {
+      label: 'Come as you are',
+      href: '/join',
+      enabled: true,
+    },
+  },
+
+  footer: {
+    brandName: 'Queen Prayer Walking',
+    brandTagline: 'Community · Faith in motion',
+    copyrightText: 'FAITH IN MOTION · WALK GENTLY',
+    facebookUrl: 'https://www.facebook.com/share/1Ed2ocvWNU/',
+    instagramUrl: '',
+    emailContact: '',
+    showFacebook: true,
+  },
+
+  bottomInvite: {
+    enabled: true,
+    eyebrow: 'The path is better together',
+    headingMain: 'There is a little more light when we walk side by side.',
+    headingEmphasized: 'light',
+    ctaText: 'Take a first step',
+    ctaHref: '/join',
+  },
+
+  theme: {
+    primaryColor: '#6e5388',
+    plumDeep: '#3c2c4c',
+    roseColor: '#7b579b',
+    goldAccent: '#f19145',
+    paperBg: '#f7f2fc',
+    paperDeep: '#eee5f7',
+    inkColor: '#34283f',
+    fontSans: "'DM Sans', sans-serif",
+    fontSerif: "'Playfair Display', Georgia, serif",
+    borderRadius: '1rem',
+  },
+
+  home: {
+    hero: {
+      photo: DEFAULT_PHOTOS.hero,
+      photoAlt: 'Women walking together along a sunlit path',
+      eyebrow: 'A community for women, in motion',
+      titleLine1: 'Walk in faith.',
+      titleLine2: 'Pray in ',
+      titleEmphasized: 'good company.',
+      lede: 'A little fresh air. A little prayer. A circle of women reminding one another that hope is something we can walk toward, together.',
+      primaryCtaText: 'Find your first step',
+      primaryCtaHref: '/join',
+      secondaryCtaText: 'Get to know us',
+      secondaryCtaHref: '/about',
+      sealTextTop: 'Rooted in faith',
+      sealTextBottom: 'Growing together',
+      noteText: 'A slower pace. A fuller heart.',
+      indexBadgeNum: '01',
+      indexBadgeLabel: 'A path we share',
+    },
+    marqueeText: 'Faith · Fellowship · Hope · A path we share',
+    marqueeEnabled: true,
+    intro: {
+      sectionNum: '02',
+      sectionLabel: 'Why we walk',
+      quote: '“Sometimes the prayer begins with simply showing up.”',
+      headingMain: 'A place to bring your whole self — ',
+      headingEmphasized: 'and take the next step.',
+      body: 'Queen Prayer Walking Community is a welcoming circle of women who make room for faith in the middle of real life. We walk side by side, lift one another in prayer, and leave space for the conversations that grow along the way.',
+      signature: 'Walk gently. Pray boldly.',
+      ctaText: 'Our heart and values',
+      ctaHref: '/about',
+    },
+    split: {
+      sectionNum: '03',
+      sectionLabel: 'A simple rhythm',
+      headingLine1: 'Room to breathe.',
+      headingLine2: 'Room to believe.',
+      body: 'No perfect words or quick answers needed. Just a shared path, an open heart, and the grace to begin where you are.',
+      ctaText: 'Explore the practice',
+      ctaHref: '/practice',
+      photo: DEFAULT_PHOTOS.prayer,
+      photoAlt: 'Women gathering in a quiet moment of prayer outdoors',
+    },
+    meetingBand: {
+      sectionNum: '04',
+      sectionLabel: 'A regular moment together',
+      headingLine1: 'Make a little room',
+      headingLine2: 'in your month.',
+      scheduleText: 'Every last Sunday of the month at 9:00 AM.',
+      ctaText: 'Meeting details',
+      ctaHref: '/meetings',
+    },
+  },
+
+  about: {
+    hero: {
+      eyebrow: 'Why we walk',
+      headingMain: 'A place to bring your whole self — ',
+      headingEmphasized: 'and take the next step.',
+      intro: 'Queen Prayer Walking Community is a welcoming circle of women who make room for faith in the middle of real life.',
+      photo: '',
+    },
+    purposeIntro: {
+      eyebrow: 'Our purpose',
+      headingLine1: 'Walk gently.',
+      headingEmphasized: 'Pray boldly.',
+      paragraphs: [
+        'We walk side by side, lift one another in prayer, and leave space for the conversations that grow along the way. Sometimes the prayer begins with simply showing up.',
+        'There is no expectation to have everything figured out. Every story arrives at its own pace, and there is room to listen, learn, and be exactly where you are.',
+      ],
+    },
+    values: {
+      eyebrow: 'What we hold close',
+      headingMain: 'A faith that feels like ',
+      headingEmphasized: 'an open door.',
+      items: [
+        {
+          id: 'welcome',
+          name: 'Welcome',
+          copy: 'Every story arrives at its own pace. There is room to listen, learn, and be exactly where you are.',
+        },
+        {
+          id: 'fellowship',
+          name: 'Fellowship',
+          copy: 'We choose kindness, presence, and the steady gift of walking alongside one another.',
+        },
+        {
+          id: 'hope',
+          name: 'Hope',
+          copy: 'We look for the light already finding its way through — and help one another notice it.',
+        },
+        {
+          id: 'growth',
+          name: 'Growth',
+          copy: 'Faith is a living journey. We keep taking small, honest steps, together.',
+        },
+      ],
+      quote: '“Let us consider how we may spur one another on toward love and good deeds.”',
+      citation: 'Hebrews 10:24 · A verse for the road',
+    },
+    scripture: {
+      eyebrow: 'A promise for the journey',
+      quote: '“For where two or three gather in my name, there am I with them.”',
+      citation: 'Matthew 18:20 · NIV',
+      note: 'A quiet reminder: even the smallest gathering can hold a holy kind of strength.',
+    },
+  },
+
+  practice: {
+    hero: {
+      eyebrow: 'A simple rhythm',
+      headingLine1: 'Room to breathe.',
+      headingEmphasized: 'Room to believe.',
+      intro: 'No perfect words or quick answers needed. Just a shared path, an open heart, and the grace to begin where you are.',
+      photo: DEFAULT_PHOTOS.walking,
+    },
+    head: {
+      eyebrow: 'A gentle way to begin',
+      heading: 'There is no perfect pace.',
+      intro: 'Walking prayer can be quiet, spoken, shared, or simply carried in your heart.',
+    },
+    steps: [
+      {
+        id: 'arrive',
+        number: '01 / ARRIVE',
+        icon: 'footprints',
+        heading: 'Come as you are',
+        text: 'Bring your questions, your gratitude, your tiredness — or simply come to listen. You belong before you have anything figured out.',
+      },
+      {
+        id: 'walk',
+        number: '02 / WALK',
+        icon: 'heart',
+        heading: 'Walk beside one another',
+        text: 'We share the path at a human pace. Conversation and quiet both have a place in a circle that makes room for each woman.',
+      },
+      {
+        id: 'pray',
+        number: '03 / PRAY',
+        icon: 'book',
+        heading: 'Carry hope forward',
+        text: 'We bring what is on our hearts to God, hold one another in prayer, and go on with a little more courage for the road ahead.',
+      },
+    ],
+    promiseIntro: {
+      eyebrow: 'A promise for the journey',
+      quote: '“For where two or three gather in my name, there am I with them.”',
+      citation: 'Matthew 18:20 · NIV',
+      note: 'A quiet reminder: even the smallest gathering can hold a holy kind of strength.',
+      ctaText: 'See meeting details',
+      ctaHref: '/meetings',
+    },
+  },
+
+  sisterhood: {
+    hero: {
+      eyebrow: 'Sisterhood, without the pressure',
+      headingLine1: 'Not a race.',
+      headingLine2: 'Not a performance.',
+      headingEmphasized: 'A shared way.',
+      intro: 'Some days we talk. Some days we let the quiet do its work. The beauty is knowing you do not have to carry every season alone.',
+      photo: DEFAULT_PHOTOS.prayer,
+    },
+    walkSection: {
+      photo: DEFAULT_PHOTOS.walking,
+      photoAlt: 'Women walking together along a sunlit path',
+      imageCaption: 'A circle with room for you',
+      eyebrow: 'Growing alongside one another',
+      headingMain: 'Make room for ',
+      headingEmphasized: 'each other.',
+      body: 'We make space for joy, for honest prayer, and for each other. Conversation and quiet both have a place in our fellowship.',
+      quote: '“We make space for joy, for honest prayer, and for each other.”',
+      quoteCitation: 'The heart of our community',
+    },
+    pageIntro: {
+      eyebrow: 'The heart of our community',
+      headingMain: 'A circle where you can ',
+      headingEmphasized: 'show up as you are.',
+      paragraphs: [
+        'We choose kindness, presence, and the steady gift of walking alongside one another. There is no performance to keep up with and no perfect words required.',
+        'We leave space for the conversations that grow along the way — and for the grace of simply listening.',
+      ],
+    },
+  },
+
+  meetings: {
+    hero: {
+      eyebrow: 'A moment to gather',
+      headingLine1: 'A little time',
+      headingLine2: 'to walk ',
+      headingEmphasized: 'together.',
+      intro: 'A regular rhythm gives us a chance to step away from the rush and make room for faith and fellowship.',
+      photo: '',
+    },
+    card: {
+      eyebrow: 'Our meeting schedule',
+      scheduleHeading: 'Every last Sunday of the month at 9:00 AM.',
+      body: 'We gather for a shared walk, prayer, and fellowship. The schedule is the detail shared here; ask about joining through our invitation route for more information.',
+      ctaText: 'Ask about joining',
+      ctaHref: '/join',
+    },
+    pageIntro: {
+      eyebrow: 'A shared rhythm',
+      headingLine1: 'Come with an open heart.',
+      headingEmphasized: 'That is enough.',
+      paragraphs: [
+        'No perfect words or quick answers needed. Conversation and quiet both have a place in a circle that makes room for each woman.',
+      ],
+    },
+  },
+
+  news: {
+    hero: {
+      eyebrow: 'From the community',
+      headingLine1: 'A small note',
+      headingEmphasized: 'from our path.',
+      intro: 'A quiet place for community news and shared updates.',
+      photo: '',
+    },
+    emptyState: {
+      eyebrow: 'News & updates',
+      heading: 'No community updates posted yet.',
+      body: 'When there is news to share, it will find a place here. For now, thank you for being part of the journey.',
+      ctaText: 'Learn about our community',
+      ctaHref: '/about',
+    },
+    articles: [],
+  },
+
+  books: {
+    hero: {
+      eyebrow: 'For the journey',
+      headingLine1: 'A gentle space',
+      headingEmphasized: 'for good words.',
+      intro: 'Books can meet us at just the right moment. This space is here for reading connected to the community journey.',
+      photo: '',
+    },
+    emptyState: {
+      eyebrow: 'Books & reading',
+      heading: 'Book details have not been shared yet.',
+      body: 'A book will be featured here when one is selected.',
+      ctaText: 'Explore the walking practice',
+      ctaHref: '/practice',
+    },
+    books: [],
+  },
+
+  join: {
+    hero: {
+      eyebrow: 'A gentle invitation',
+      headingLine1: 'Let curiosity',
+      headingEmphasized: 'be your beginning.',
+      intro: 'You do not need a polished introduction or a perfect prayer. Begin with a moment of reflection — and let the idea of walking together find its place in your heart.',
+      photo: '',
+    },
+    stepIntro: {
+      eyebrow: 'Your next step can be small',
+      headingLine1: 'A breath.',
+      headingEmphasized: 'An intention.',
+      body: 'What would you like to carry into your next walk? What might it feel like to share that hope with another woman? There is no right answer — only your own next step.',
+    },
+    stepPanel: {
+      eyebrow: 'Joining the community',
+      heading: 'Joining is by invitation.',
+      body: 'If you would like to ask about joining, please use our Facebook page. This is a personal invitation-led community; there is no sign-up form here.',
+      buttonLabel: 'Ask about joining on Facebook',
+      buttonUrl: 'https://www.facebook.com/share/1Ed2ocvWNU/',
+    },
+    joinNote: {
+      text: 'Come as you are. There is space for you to take the next step at your own pace.',
+    },
+  },
+
+  meta: {
+    '/': {
+      title: 'Queen Prayer Walking Community',
+      description: 'A welcoming circle of women making room for faith, prayer, and fellowship on a shared path.',
+    },
+    '/about': {
+      title: 'About our community | Queen Prayer Walking',
+      description: 'Discover the purpose and values at the heart of Queen Prayer Walking Community.',
+    },
+    '/practice': {
+      title: 'Prayer-walking practice | Queen Prayer Walking',
+      description: 'A gentle introduction to walking, prayer, quiet, and hope in good company.',
+    },
+    '/sisterhood': {
+      title: 'Sisterhood | Queen Prayer Walking',
+      description: 'A fellowship where women can show up as they are and walk alongside one another.',
+    },
+    '/meetings': {
+      title: 'Meetings | Queen Prayer Walking',
+      description: 'Find the community meeting schedule for Queen Prayer Walking.',
+    },
+    '/news': {
+      title: 'Community news | Queen Prayer Walking',
+      description: 'Read-only updates from Queen Prayer Walking Community.',
+    },
+    '/books': {
+      title: 'Books | Queen Prayer Walking',
+      description: 'A quiet space for books connected to the community journey.',
+    },
+    '/join': {
+      title: 'Joining | Queen Prayer Walking',
+      description: 'Learn about invitation-only joining and how to ask about the community.',
+    },
+  },
+};
+

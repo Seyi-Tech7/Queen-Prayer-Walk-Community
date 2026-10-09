@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "Queen Prayer Walk Community"
+description = "A welcoming community website introducing the Queen Prayer Walking Community, sharing its purpose and gatherings, and helping women find out how to join."
+version = "1.0.0"
+id = "artifacts/queen-prayer-walk"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 18694
+
+[services.development]
+run = "pnpm --filter @workspace/queen-prayer-walk run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/queen-prayer-walk", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/queen-prayer-walk/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "18694"
+BASE_PATH = "/"
