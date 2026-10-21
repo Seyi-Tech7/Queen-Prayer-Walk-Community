@@ -8,12 +8,10 @@ export const defaultSiteContent: SiteContent = {
     showBrandIcon: true,
     navItems: [
       { id: 'home', label: 'Home', href: '/', enabled: true },
-      { id: 'about', label: 'About', href: '/about', enabled: true },
-      { id: 'practice', label: 'The practice', href: '/practice', enabled: true },
-      { id: 'sisterhood', label: 'Sisterhood', href: '/sisterhood', enabled: true },
-      { id: 'meetings', label: 'Meetings', href: '/meetings', enabled: true },
-      { id: 'news', label: 'News', href: '/news', enabled: true },
-      { id: 'books', label: 'Books', href: '/books', enabled: true },
+      { id: 'praying-the-word', label: 'Praying the Word with QueenJudith', href: '/praying-the-word', enabled: true },
+      { id: 'community', label: 'Queens Prayer Walking Community', href: '/community', enabled: true },
+      { id: 'newsletter', label: 'Newsletter Page', href: '/newsletter', enabled: true },
+      { id: 'books', label: 'Buy Our Books', href: '/books', enabled: true },
     ],
     ctaButton: {
       label: 'Come as you are',
@@ -65,8 +63,8 @@ export const defaultSiteContent: SiteContent = {
       lede: 'A little fresh air. A little prayer. A circle of women reminding one another that hope is something we can walk toward, together.',
       primaryCtaText: 'Find your first step',
       primaryCtaHref: '/join',
-      secondaryCtaText: 'Get to know us',
-      secondaryCtaHref: '/about',
+      secondaryCtaText: 'Praying the Word',
+      secondaryCtaHref: '/praying-the-word',
       sealTextTop: 'Rooted in faith',
       sealTextBottom: 'Growing together',
       noteText: 'A slower pace. A fuller heart.',
@@ -83,8 +81,8 @@ export const defaultSiteContent: SiteContent = {
       headingEmphasized: 'and take the next step.',
       body: 'Queen Prayer Walking Community is a welcoming circle of women who make room for faith in the middle of real life. We walk side by side, lift one another in prayer, and leave space for the conversations that grow along the way.',
       signature: 'Walk gently. Pray boldly.',
-      ctaText: 'Our heart and values',
-      ctaHref: '/about',
+      ctaText: 'Pray with QueenJudith',
+      ctaHref: '/praying-the-word',
     },
     split: {
       sectionNum: '03',
@@ -93,7 +91,7 @@ export const defaultSiteContent: SiteContent = {
       headingLine2: 'Room to believe.',
       body: 'No perfect words or quick answers needed. Just a shared path, an open heart, and the grace to begin where you are.',
       ctaText: 'Explore the practice',
-      ctaHref: '/practice',
+      ctaHref: '/praying-the-word',
       photo: DEFAULT_PHOTOS.prayer,
       photoAlt: 'Women gathering in a quiet moment of prayer outdoors',
     },
@@ -103,8 +101,8 @@ export const defaultSiteContent: SiteContent = {
       headingLine1: 'Make a little room',
       headingLine2: 'in your month.',
       scheduleText: 'Every last Sunday of the month at 9:00 AM.',
-      ctaText: 'Meeting details',
-      ctaHref: '/meetings',
+      ctaText: 'Community details',
+      ctaHref: '/community',
     },
   },
 
@@ -298,7 +296,18 @@ export const defaultSiteContent: SiteContent = {
       ctaText: 'Explore the walking practice',
       ctaHref: '/practice',
     },
-    books: [],
+    books: [
+      {
+        id: 'book-1',
+        title: 'Walking in the Word: A 30-Day Prayer Journey',
+        author: 'Queen Judith',
+        description: 'An inspirational companion devotional guide designed for women combining prayer, scripture contemplation, and physical walking into a life-transforming daily rhythm.',
+        tag: 'Featured Devotional',
+        link: 'https://www.facebook.com/share/1Ed2ocvWNU/',
+        linkText: 'Order / Inquire on Facebook',
+        coverImage: 'https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=600&q=80',
+      },
+    ],
   },
 
   join: {
@@ -332,29 +341,41 @@ export const defaultSiteContent: SiteContent = {
       title: 'Queen Prayer Walking Community',
       description: 'A welcoming circle of women making room for faith, prayer, and fellowship on a shared path.',
     },
+    '/praying-the-word': {
+      title: 'Praying the Word with QueenJudith | Queen Prayer Walking',
+      description: 'Discover the foundation, purpose, scripture reflection, and 3-step prayer-walking rhythm guided by QueenJudith.',
+    },
+    '/community': {
+      title: 'Queens Prayer Walking Community | Sisterhood & Meetings',
+      description: 'A warm sisterhood walking side by side in faith, prayer, mutual support, and regular community meetings.',
+    },
+    '/newsletter': {
+      title: 'Newsletter | Queen Prayer Walking Community',
+      description: 'Subscribe to QueenJudith’s devotionals, walking reflections, announcements, and prayer guides.',
+    },
+    '/books': {
+      title: 'Buy Our Books | Queen Prayer Walking',
+      description: 'Explore and purchase companion prayer journals, walking devotionals, and inspirational guides.',
+    },
     '/about': {
-      title: 'About our community | Queen Prayer Walking',
+      title: 'Praying the Word with QueenJudith',
       description: 'Discover the purpose and values at the heart of Queen Prayer Walking Community.',
     },
     '/practice': {
-      title: 'Prayer-walking practice | Queen Prayer Walking',
+      title: 'Prayer-walking practice',
       description: 'A gentle introduction to walking, prayer, quiet, and hope in good company.',
     },
     '/sisterhood': {
-      title: 'Sisterhood | Queen Prayer Walking',
+      title: 'Queens Prayer Walking Community',
       description: 'A fellowship where women can show up as they are and walk alongside one another.',
     },
     '/meetings': {
-      title: 'Meetings | Queen Prayer Walking',
+      title: 'Community Meetings & Schedule',
       description: 'Find the community meeting schedule for Queen Prayer Walking.',
     },
     '/news': {
-      title: 'Community news | Queen Prayer Walking',
-      description: 'Read-only updates from Queen Prayer Walking Community.',
-    },
-    '/books': {
-      title: 'Books | Queen Prayer Walking',
-      description: 'A quiet space for books connected to the community journey.',
+      title: 'Community Newsletter & Updates',
+      description: 'Updates, news, and devotionals from Queen Prayer Walking Community.',
     },
     '/join': {
       title: 'Joining | Queen Prayer Walking',
