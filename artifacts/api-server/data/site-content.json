@@ -11,38 +11,26 @@
         "enabled": true
       },
       {
-        "id": "about",
-        "label": "About",
-        "href": "/about",
+        "id": "praying-the-word",
+        "label": "Praying the Word with QueenJudith",
+        "href": "/praying-the-word",
         "enabled": true
       },
       {
-        "id": "practice",
-        "label": "The practice",
-        "href": "/practice",
+        "id": "community",
+        "label": "Queens Prayer Walking Community",
+        "href": "/community",
         "enabled": true
       },
       {
-        "id": "sisterhood",
-        "label": "Sisterhood",
-        "href": "/sisterhood",
-        "enabled": true
-      },
-      {
-        "id": "meetings",
-        "label": "Meetings",
-        "href": "/meetings",
-        "enabled": true
-      },
-      {
-        "id": "news",
-        "label": "News",
-        "href": "/news",
+        "id": "newsletter",
+        "label": "Newsletter Page",
+        "href": "/newsletter",
         "enabled": true
       },
       {
         "id": "books",
-        "label": "Books",
+        "label": "Buy Our Books",
         "href": "/books",
         "enabled": true
       }
