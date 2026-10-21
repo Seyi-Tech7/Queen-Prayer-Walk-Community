@@ -2,9 +2,19 @@ import React, { createContext, useContext, useEffect, useState, type ReactNode }
 import { defaultSiteContent } from './defaultContent';
 import type { SiteContent } from './types';
 
-const STORAGE_KEY = 'qpw_site_content_v1';
+const STORAGE_KEY = 'qpw_site_content_v2';
+const LEGACY_STORAGE_KEY = 'qpw_site_content_v1';
 const AUTH_KEY = 'qpw_admin_authenticated';
 const ADMIN_PASSWORD_DEFAULT = 'queenwalk2026';
+
+function migrateContent(content: any): SiteContent {
+  const merged = deepMerge(defaultSiteContent, content);
+  // If nav items are still the legacy 7 items, update to default 5 items
+  if (merged.header?.navItems?.some((i: any) => i.id === 'about' || i.id === 'practice')) {
+    merged.header.navItems = defaultSiteContent.header.navItems;
+  }
+  return merged;
+}
 
 interface CMSContextType {
   content: SiteContent;
@@ -51,10 +61,10 @@ function deepMerge<T>(target: T, source: any): T {
 export function CMSProvider({ children }: { children: ReactNode }) {
   const [content, setContent] = useState<SiteContent>(() => {
     try {
-      const stored = localStorage.getItem(STORAGE_KEY);
+      const stored = localStorage.getItem(STORAGE_KEY) || localStorage.getItem(LEGACY_STORAGE_KEY);
       if (stored) {
         const parsed = JSON.parse(stored);
-        return deepMerge(defaultSiteContent, parsed);
+        return migrateContent(parsed);
       }
     } catch (e) {
       console.warn('Failed to parse saved site content:', e);
@@ -83,7 +93,7 @@ export function CMSProvider({ children }: { children: ReactNode }) {
       })
       .then((data) => {
         if (data && typeof data === 'object') {
-          setContent((prev) => deepMerge(prev, data));
+          setContent((prev) => migrateContent(deepMerge(prev, data)));
         }
       })
       .catch(() => {
