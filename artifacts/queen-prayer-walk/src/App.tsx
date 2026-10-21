@@ -15,6 +15,7 @@ import {
   X,
   ExternalLink,
   Lock,
+  Check,
 } from 'lucide-react';
 import { CMSProvider, useCMS } from './cms/cmsContext';
 import { InlineEditWrapper } from './components/admin/InlineEditWrapper';
@@ -54,7 +55,22 @@ function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [location] = useLocation();
 
-  useEffect(() => setMenuOpen(false), [location]);
+  // Close drawer on page navigation
+  useEffect(() => {
+    setMenuOpen(false);
+  }, [location]);
+
+  // Prevent background body scroll when drawer is open
+  useEffect(() => {
+    if (menuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [menuOpen]);
 
   const activeNavItems = header.navItems.filter((item) => item.enabled);
 
@@ -63,63 +79,128 @@ function Header() {
       <header className="topbar">
         <div className="wrap nav-inner">
           <Brand />
-          <nav className="desktop-nav" aria-label="Main navigation">
-            {activeNavItems.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                data-testid={`nav-${item.href === '/' ? 'home' : item.href.replace(/^\//, '')}`}
-                aria-current={location === item.href ? 'page' : undefined}
-              >
-                {item.label}
-              </Link>
-            ))}
+
+          {/* Action area: CTA button + Hamburger button */}
+          <div className="nav-actions">
             {header.ctaButton.enabled && (
               <Link
                 className="nav-cta"
                 href={header.ctaButton.href}
                 data-testid="nav-join"
               >
-                {header.ctaButton.label} <ArrowRight size={14} aria-hidden="true" />
+                <span>{header.ctaButton.label}</span>
+                <ArrowRight size={13} aria-hidden="true" />
               </Link>
             )}
-          </nav>
-          <button
-            className="menu-toggle"
-            type="button"
-            aria-label={menuOpen ? 'Close navigation menu' : 'Open navigation menu'}
-            aria-expanded={menuOpen}
-            aria-controls="mobile-navigation"
-            onClick={() => setMenuOpen((open) => !open)}
-            data-testid="button-mobile-menu"
-          >
-            {menuOpen ? <X size={23} /> : <Menu size={23} />}
-          </button>
-          {menuOpen && (
-            <nav className="mobile-nav" id="mobile-navigation" aria-label="Mobile navigation">
-              {activeNavItems.map((item) => (
+
+            {/* Hamburger Button accessible across phones, tablets & laptops */}
+            <button
+              className="hamburger-btn"
+              type="button"
+              aria-label={menuOpen ? 'Close navigation menu' : 'Open navigation menu'}
+              aria-expanded={menuOpen}
+              aria-controls="site-navigation-drawer"
+              onClick={() => setMenuOpen((open) => !open)}
+              data-testid="button-hamburger-menu"
+            >
+              <span className="hamburger-icon-box">
+                {menuOpen ? <X size={20} /> : <Menu size={20} />}
+              </span>
+              <span className="hamburger-text">
+                {menuOpen ? 'Close' : 'Menu'}
+              </span>
+            </button>
+          </div>
+        </div>
+      </header>
+
+      {/* Backdrop overlay */}
+      {menuOpen && (
+        <div
+          className="menu-drawer-backdrop"
+          onClick={() => setMenuOpen(false)}
+          aria-hidden="true"
+        />
+      )}
+
+      {/* Hamburger Navigation Drawer */}
+      <aside
+        id="site-navigation-drawer"
+        className={`menu-drawer ${menuOpen ? 'is-open' : ''}`}
+        aria-label="Site navigation menu"
+        aria-hidden={!menuOpen}
+      >
+        <div className="menu-drawer-inner">
+          {/* Drawer Header */}
+          <div className="menu-drawer-header">
+            <Brand />
+            <button
+              type="button"
+              className="drawer-close-btn"
+              onClick={() => setMenuOpen(false)}
+              aria-label="Close navigation menu"
+              data-testid="button-close-drawer"
+            >
+              <X size={20} />
+            </button>
+          </div>
+
+          <div className="menu-drawer-eyebrow">
+            <span className="eyebrow">Menu · 5 Main Pages</span>
+          </div>
+
+          {/* 5 Menu Links in exact requested order */}
+          <nav className="menu-drawer-nav" aria-label="Main navigation directory">
+            {activeNavItems.map((item, index) => {
+              const isActive = location === item.href;
+              const formattedIndex = String(index + 1).padStart(2, '0');
+              return (
                 <Link
                   key={item.href}
                   href={item.href}
                   onClick={() => setMenuOpen(false)}
-                  data-testid={`mobile-nav-${item.href === '/' ? 'home' : item.href.replace(/^\//, '')}`}
+                  className={`menu-drawer-link ${isActive ? 'is-active' : ''}`}
+                  data-testid={`drawer-nav-${item.href === '/' ? 'home' : item.href.replace(/^\//, '')}`}
+                  aria-current={isActive ? 'page' : undefined}
                 >
-                  {item.label}
+                  <span className="menu-link-num">{formattedIndex}</span>
+                  <span className="menu-link-label">{item.label}</span>
+                  <ArrowRight size={15} className="menu-link-arrow" />
                 </Link>
-              ))}
-              {header.ctaButton.enabled && (
-                <Link
-                  href={header.ctaButton.href}
-                  onClick={() => setMenuOpen(false)}
-                  data-testid="mobile-nav-join"
+              );
+            })}
+          </nav>
+
+          {/* Drawer Footer */}
+          <div className="menu-drawer-footer">
+            {header.ctaButton.enabled && (
+              <Link
+                className="button button-primary w-full justify-center"
+                href={header.ctaButton.href}
+                onClick={() => setMenuOpen(false)}
+                data-testid="drawer-cta-join"
+              >
+                <span>{header.ctaButton.label}</span>
+                <ArrowRight size={14} aria-hidden="true" />
+              </Link>
+            )}
+
+            <div className="drawer-footer-meta">
+              <span className="drawer-tagline">Faith in motion · Walk gently</span>
+              {content.footer.showFacebook && (
+                <a
+                  href={content.footer.facebookUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="drawer-social-link"
                 >
-                  {header.ctaButton.label}
-                </Link>
+                  Facebook <ExternalLink size={11} />
+                </a>
               )}
-            </nav>
-          )}
+            </div>
+          </div>
         </div>
-      </header>
+      </aside>
     </InlineEditWrapper>
   );
 }
@@ -365,28 +446,50 @@ function Scripture() {
   );
 }
 
-function AboutPage() {
+function renderStepIcon(icon: string) {
+  switch (icon) {
+    case 'footprints':
+      return <Footprints aria-hidden="true" />;
+    case 'heart':
+      return <HeartHandshake aria-hidden="true" />;
+    case 'book':
+      return <BookOpen aria-hidden="true" />;
+    case 'leaf':
+      return <Leaf aria-hidden="true" />;
+    case 'flower':
+      return <Flower2 aria-hidden="true" />;
+    case 'sparkles':
+      return <Sparkles aria-hidden="true" />;
+    case 'sun':
+      return <Sun aria-hidden="true" />;
+    default:
+      return <Footprints aria-hidden="true" />;
+  }
+}
+
+function PrayingTheWordPage() {
   const { content } = useCMS();
-  const { about } = content;
+  const { about, practice } = content;
   const { hero, purposeIntro, values } = about;
+  const { head, steps, promiseIntro } = practice;
 
   return (
     <>
-      <InlineEditWrapper sectionKey="about.hero" sectionName="About Hero" adminTabTarget="about">
+      <InlineEditWrapper sectionKey="about.hero" sectionName="Praying the Word Hero" adminTabTarget="about">
         <PageHero
-          eyebrow={hero.eyebrow}
+          eyebrow="Praying the Word · Foundation & Practice"
           title={
             <>
-              {hero.headingMain}
-              <em>{hero.headingEmphasized}</em>
+              Praying the Word with <br />
+              <em>QueenJudith</em>
             </>
           }
-          intro={hero.intro}
-          image={hero.photo || undefined}
+          intro={hero.intro || 'A sacred rhythm of scripture, walking, quiet listening, and heartfelt fellowship founded by QueenJudith.'}
+          image={practice.hero.photo || hero.photo || undefined}
         />
       </InlineEditWrapper>
 
-      <InlineEditWrapper sectionKey="about.purposeIntro" sectionName="Purpose Section" adminTabTarget="about">
+      <InlineEditWrapper sectionKey="about.purposeIntro" sectionName="Purpose Story" adminTabTarget="about">
         <PageIntro
           eyebrow={purposeIntro.eyebrow}
           title={
@@ -439,52 +542,6 @@ function AboutPage() {
       </InlineEditWrapper>
 
       <Scripture />
-    </>
-  );
-}
-
-function renderStepIcon(icon: string) {
-  switch (icon) {
-    case 'footprints':
-      return <Footprints aria-hidden="true" />;
-    case 'heart':
-      return <HeartHandshake aria-hidden="true" />;
-    case 'book':
-      return <BookOpen aria-hidden="true" />;
-    case 'leaf':
-      return <Leaf aria-hidden="true" />;
-    case 'flower':
-      return <Flower2 aria-hidden="true" />;
-    case 'sparkles':
-      return <Sparkles aria-hidden="true" />;
-    case 'sun':
-      return <Sun aria-hidden="true" />;
-    default:
-      return <Footprints aria-hidden="true" />;
-  }
-}
-
-function PracticePage() {
-  const { content } = useCMS();
-  const { practice } = content;
-  const { hero, head, steps, promiseIntro } = practice;
-
-  return (
-    <>
-      <InlineEditWrapper sectionKey="practice.hero" sectionName="Practice Hero" adminTabTarget="practice">
-        <PageHero
-          eyebrow={hero.eyebrow}
-          title={
-            <>
-              {hero.headingLine1}
-              <br />
-              <em>{hero.headingEmphasized}</em>
-            </>
-          }
-          intro={hero.intro}
-          image={hero.photo}
-        />
-      </InlineEditWrapper>
 
       <InlineEditWrapper sectionKey="practice.steps" sectionName="Practice Steps Grid" adminTabTarget="practice">
         <section className="practice-section">
@@ -517,8 +574,8 @@ function PracticePage() {
         >
           <p>{promiseIntro.citation}</p>
           <p>{promiseIntro.note}</p>
-          <PageLink href={promiseIntro.ctaHref} testId="cta-practice-meetings">
-            {promiseIntro.ctaText}
+          <PageLink href="/community" testId="cta-practice-community">
+            Explore Queens Community
           </PageLink>
         </PageIntro>
       </InlineEditWrapper>
@@ -526,27 +583,25 @@ function PracticePage() {
   );
 }
 
-function SisterhoodPage() {
+function QueensCommunityPage() {
   const { content } = useCMS();
-  const { sisterhood } = content;
-  const { hero, walkSection, pageIntro } = sisterhood;
+  const { sisterhood, meetings } = content;
+  const { hero, walkSection, pageIntro: sisterIntro } = sisterhood;
+  const { card, pageIntro: meetingIntro } = meetings;
 
   return (
     <>
-      <InlineEditWrapper sectionKey="sisterhood.hero" sectionName="Sisterhood Hero" adminTabTarget="sisterhood">
+      <InlineEditWrapper sectionKey="sisterhood.hero" sectionName="Community Hero" adminTabTarget="sisterhood">
         <PageHero
-          eyebrow={hero.eyebrow}
+          eyebrow="Queens Prayer Walking Community · Faith in Motion"
           title={
             <>
-              {hero.headingLine1}
-              <br />
-              {hero.headingLine2}
-              <br />
-              <em>{hero.headingEmphasized}</em>
+              Queens Prayer Walking <br />
+              <em>Community</em>
             </>
           }
-          intro={hero.intro}
-          image={hero.photo}
+          intro={hero.intro || 'A welcoming sisterhood making room for prayer, health, mutual support, and regular monthly walks.'}
+          image={hero.photo || undefined}
         />
       </InlineEditWrapper>
 
@@ -580,44 +635,18 @@ function SisterhoodPage() {
 
       <InlineEditWrapper sectionKey="sisterhood.intro" sectionName="Heart of Sisterhood" adminTabTarget="sisterhood">
         <PageIntro
-          eyebrow={pageIntro.eyebrow}
+          eyebrow={sisterIntro.eyebrow}
           title={
             <>
-              {pageIntro.headingMain}
-              <em>{pageIntro.headingEmphasized}</em>
+              {sisterIntro.headingMain}
+              <em>{sisterIntro.headingEmphasized}</em>
             </>
           }
         >
-          {pageIntro.paragraphs.map((p, i) => (
+          {sisterIntro.paragraphs.map((p, i) => (
             <p key={i}>{p}</p>
           ))}
         </PageIntro>
-      </InlineEditWrapper>
-    </>
-  );
-}
-
-function MeetingsPage() {
-  const { content } = useCMS();
-  const { meetings } = content;
-  const { hero, card, pageIntro } = meetings;
-
-  return (
-    <>
-      <InlineEditWrapper sectionKey="meetings.hero" sectionName="Meetings Hero" adminTabTarget="meetings">
-        <PageHero
-          eyebrow={hero.eyebrow}
-          title={
-            <>
-              {hero.headingLine1}
-              <br />
-              {hero.headingLine2}
-              <em>{hero.headingEmphasized}</em>
-            </>
-          }
-          intro={hero.intro}
-          image={hero.photo || undefined}
-        />
       </InlineEditWrapper>
 
       <InlineEditWrapper sectionKey="meetings.card" sectionName="Meeting Schedule Card" adminTabTarget="meetings">
@@ -638,16 +667,16 @@ function MeetingsPage() {
 
       <InlineEditWrapper sectionKey="meetings.intro" sectionName="Meeting Rhythm Reflection" adminTabTarget="meetings">
         <PageIntro
-          eyebrow={pageIntro.eyebrow}
+          eyebrow={meetingIntro.eyebrow}
           title={
             <>
-              {pageIntro.headingLine1}
+              {meetingIntro.headingLine1}
               <br />
-              <em>{pageIntro.headingEmphasized}</em>
+              <em>{meetingIntro.headingEmphasized}</em>
             </>
           }
         >
-          {pageIntro.paragraphs.map((p, i) => (
+          {meetingIntro.paragraphs.map((p, i) => (
             <p key={i}>{p}</p>
           ))}
         </PageIntro>
@@ -656,29 +685,97 @@ function MeetingsPage() {
   );
 }
 
-function NewsPage() {
+function NewsletterPage() {
   const { content } = useCMS();
   const { news } = content;
   const { hero, emptyState, articles } = news;
+
+  const [subscriberName, setSubscriberName] = useState('');
+  const [subscriberEmail, setSubscriberEmail] = useState('');
+  const [subscribed, setSubscribed] = useState(false);
+
+  const handleSubscribe = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!subscriberEmail.trim()) return;
+    try {
+      const existing = JSON.parse(localStorage.getItem('queen_walk_subscribers') || '[]');
+      existing.push({ name: subscriberName, email: subscriberEmail, date: new Date().toISOString() });
+      localStorage.setItem('queen_walk_subscribers', JSON.stringify(existing));
+    } catch {
+      // storage exception ignored
+    }
+    setSubscribed(true);
+  };
 
   const publishedArticles = articles.filter((a) => a.published);
 
   return (
     <>
-      <InlineEditWrapper sectionKey="news.hero" sectionName="News Hero" adminTabTarget="news">
+      <InlineEditWrapper sectionKey="news.hero" sectionName="Newsletter Hero" adminTabTarget="news">
         <PageHero
-          eyebrow={hero.eyebrow}
+          eyebrow={hero.eyebrow || 'Stay Nourished & Connected'}
           title={
             <>
-              {hero.headingLine1}
+              {hero.headingLine1 || 'Community Newsletter &'}
               <br />
-              <em>{hero.headingEmphasized}</em>
+              <em>{hero.headingEmphasized || 'Walk Reflections'}</em>
             </>
           }
-          intro={hero.intro}
+          intro={hero.intro || 'Gentle devotionals, walking reflections, meeting announcements, and updates delivered straight to your heart.'}
           image={hero.photo || undefined}
         />
       </InlineEditWrapper>
+
+      {/* Interactive Newsletter Subscription Box */}
+      <section className="newsletter-subscribe-section">
+        <div className="wrap">
+          <div className="newsletter-box">
+            <div className="newsletter-box-copy">
+              <span className="eyebrow">Stay Connected With Us</span>
+              <h2>Subscribe to Our Monthly Walk & Word</h2>
+              <p>
+                Receive QueenJudith's prayer guides, scripture meditations, and community gathering notices delivered directly to your inbox.
+              </p>
+            </div>
+
+            {subscribed ? (
+              <div className="newsletter-success">
+                <Check size={28} className="text-emerald-600 shrink-0" />
+                <div>
+                  <h3 className="font-serif text-lg text-purple-950 font-bold m-0 mb-1">You are subscribed!</h3>
+                  <p className="text-xs text-purple-800 m-0 leading-relaxed">
+                    Thank you for joining our prayer newsletter circle. May each walk bring renewed grace.
+                  </p>
+                </div>
+              </div>
+            ) : (
+              <form onSubmit={handleSubscribe} className="newsletter-form">
+                <div className="newsletter-inputs">
+                  <input
+                    type="text"
+                    placeholder="Your first name (optional)"
+                    value={subscriberName}
+                    onChange={(e) => setSubscriberName(e.target.value)}
+                    className="newsletter-input"
+                  />
+                  <input
+                    type="email"
+                    required
+                    placeholder="Enter your email address"
+                    value={subscriberEmail}
+                    onChange={(e) => setSubscriberEmail(e.target.value)}
+                    className="newsletter-input"
+                  />
+                </div>
+                <button type="submit" className="button button-primary newsletter-submit">
+                  <span>Subscribe to Newsletter</span>
+                  <ArrowRight size={14} aria-hidden="true" />
+                </button>
+              </form>
+            )}
+          </div>
+        </div>
+      </section>
 
       {publishedArticles.length > 0 ? (
         <InlineEditWrapper sectionKey="news.articles" sectionName="Articles Feed" adminTabTarget="news">
@@ -735,7 +832,7 @@ function NewsPage() {
   );
 }
 
-function BooksPage() {
+function BuyOurBooksPage() {
   const { content } = useCMS();
   const { books } = content;
   const { hero, emptyState, books: bookList } = books;
@@ -744,15 +841,15 @@ function BooksPage() {
     <>
       <InlineEditWrapper sectionKey="books.hero" sectionName="Books Hero" adminTabTarget="books">
         <PageHero
-          eyebrow={hero.eyebrow}
+          eyebrow={hero.eyebrow || 'Faith in Print · Companion Guides'}
           title={
             <>
-              {hero.headingLine1}
+              {hero.headingLine1 || 'Buy Our Books &'}
               <br />
-              <em>{hero.headingEmphasized}</em>
+              <em>{hero.headingEmphasized || 'Prayer Journals'}</em>
             </>
           }
-          intro={hero.intro}
+          intro={hero.intro || 'Deepen your prayer journey with devotionals, prayer journals, and walking guides written to accompany your stride.'}
           image={hero.photo || undefined}
         />
       </InlineEditWrapper>
@@ -781,9 +878,10 @@ function BooksPage() {
                           href={book.link}
                           target="_blank"
                           rel="noreferrer"
-                          className="text-xs text-purple-700 hover:text-purple-950 font-semibold inline-flex items-center gap-1"
+                          className="button button-primary book-buy-btn"
                         >
-                          {book.linkText || 'Learn more'} <ArrowRight size={12} />
+                          <span>{book.linkText || 'Order / Buy Book'}</span>
+                          <ExternalLink size={12} />
                         </a>
                       )}
                     </div>
@@ -813,6 +911,14 @@ function BooksPage() {
     </>
   );
 }
+
+// Backward-compatibility aliases so previous components/routes continue working
+const AboutPage = PrayingTheWordPage;
+const PracticePage = PrayingTheWordPage;
+const SisterhoodPage = QueensCommunityPage;
+const MeetingsPage = QueensCommunityPage;
+const NewsPage = NewsletterPage;
+const BooksPage = BuyOurBooksPage;
 
 function JoinPage() {
   const { content } = useCMS();
@@ -1012,12 +1118,21 @@ function MainSiteLayout() {
       <main>
         <Switch>
           <Route path="/" component={HomePage} />
-          <Route path="/about" component={AboutPage} />
-          <Route path="/practice" component={PracticePage} />
-          <Route path="/sisterhood" component={SisterhoodPage} />
-          <Route path="/meetings" component={MeetingsPage} />
-          <Route path="/news" component={NewsPage} />
-          <Route path="/books" component={BooksPage} />
+
+          {/* 5 Core Website Pages */}
+          <Route path="/praying-the-word" component={PrayingTheWordPage} />
+          <Route path="/community" component={QueensCommunityPage} />
+          <Route path="/newsletter" component={NewsletterPage} />
+          <Route path="/books" component={BuyOurBooksPage} />
+          <Route path="/buy-our-books" component={BuyOurBooksPage} />
+
+          {/* Seamless backward compatibility routes */}
+          <Route path="/about" component={PrayingTheWordPage} />
+          <Route path="/practice" component={PrayingTheWordPage} />
+          <Route path="/sisterhood" component={QueensCommunityPage} />
+          <Route path="/meetings" component={QueensCommunityPage} />
+          <Route path="/news" component={NewsletterPage} />
+
           <Route path="/join" component={JoinPage} />
           <Route component={NotFound} />
         </Switch>
