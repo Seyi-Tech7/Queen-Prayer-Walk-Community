@@ -54,28 +54,53 @@ interface NavSection {
 
 const NAV_SECTIONS: NavSection[] = [
   {
-    group: 'Website Pages',
+    group: 'Website Pages (5 Pages)',
     items: [
-      { id: 'home', label: 'Home Page', icon: Home, description: 'Hero, manifesto & meetings' },
-      { id: 'about', label: 'About Us', icon: BookOpen, description: 'Values & purpose story' },
-      { id: 'practice', label: 'The Practice', icon: Footprints, description: '3 walking prayer steps' },
-      { id: 'sisterhood', label: 'Sisterhood', icon: Heart, description: 'Community & fellowship' },
-      { id: 'meetings', label: 'Meetings Schedule', icon: Calendar, description: 'Dates & details' },
-      { id: 'news', label: 'Community News', icon: Newspaper, description: 'Post updates & notes' },
-      { id: 'books', label: 'Books & Reading', icon: Library, description: 'Recommended books' },
-      { id: 'join', label: 'Join / Invitation', icon: UserPlus, description: 'Invitation page' },
+      { id: 'home', label: '1. Home Page', icon: Home, description: 'Hero, manifesto & band' },
+      { id: 'about', label: '2. Praying the Word', icon: BookOpen, description: 'Purpose, values & scripture' },
+      { id: 'practice', label: '   ↳ Walking Practice', icon: Footprints, description: '3 walking prayer steps' },
+      { id: 'sisterhood', label: '3. Queens Community', icon: Heart, description: 'Sisterhood story & photo' },
+      { id: 'meetings', label: '   ↳ Meetings Schedule', icon: Calendar, description: 'Dates & gathering times' },
+      { id: 'news', label: '4. Newsletter Page', icon: Newspaper, description: 'Subscribe box & feed' },
+      { id: 'books', label: '5. Buy Our Books', icon: Library, description: 'Book catalog & buy links' },
+      { id: 'join', label: 'Join / Invitation', icon: UserPlus, description: 'Invitation guide' },
     ],
   },
   {
-    group: 'Global Styling & Assets',
+    group: 'Navigation & Styling',
     items: [
-      { id: 'header-footer', label: 'Header & Navigation', icon: Compass, description: 'Logo, links & CTA' },
+      { id: 'header-footer', label: 'Hamburger Menu & Nav', icon: Compass, description: 'Menu items, logo & CTA' },
       { id: 'media', label: 'Photo Library', icon: ImageIcon, description: 'Swap & upload images' },
       { id: 'theme', label: 'Colors & Theme', icon: Palette, description: 'Brand palette & styles' },
       { id: 'seo', label: 'Page Titles & SEO', icon: Search, description: 'Browser titles' },
     ],
   },
 ];
+
+function getTabUrl(tab: string): string {
+  switch (tab) {
+    case 'home':
+    case 'header-footer':
+    case 'theme':
+    case 'media':
+    case 'seo':
+      return '/';
+    case 'about':
+    case 'practice':
+      return '/praying-the-word';
+    case 'sisterhood':
+    case 'meetings':
+      return '/community';
+    case 'news':
+      return '/newsletter';
+    case 'books':
+      return '/books';
+    case 'join':
+      return '/join';
+    default:
+      return '/';
+  }
+}
 
 export function AdminDashboard() {
   const {
@@ -402,7 +427,7 @@ export function AdminDashboard() {
             </div>
 
             <Link
-              href={activeTab === 'home' ? '/' : `/${activeTab}`}
+              href={getTabUrl(activeTab)}
               className="text-[11px] text-purple-700 hover:text-purple-950 font-semibold inline-flex items-center gap-1 bg-purple-50 hover:bg-purple-100 px-2.5 py-1 rounded-md border border-purple-200 transition"
             >
               <ExternalLink size={11} /> Open Page
@@ -440,7 +465,7 @@ export function AdminDashboard() {
               </button>
             </div>
             <iframe
-              src={activeTab === 'home' || activeTab === 'header-footer' ? '/' : `/${activeTab}`}
+              src={getTabUrl(activeTab)}
               title="Site Live Preview"
               className="w-full flex-1 border-0"
             />
