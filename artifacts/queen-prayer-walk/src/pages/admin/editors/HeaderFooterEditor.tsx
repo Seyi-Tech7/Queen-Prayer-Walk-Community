@@ -113,8 +113,8 @@ export function HeaderFooterEditor() {
 
       {/* Navigation Links */}
       <SectionCard
-        title="Navigation Menu Items"
-        subtitle="Manage, reorder, or enable/disable links in the top header and mobile menus"
+        title="Hamburger Navigation Menu (5 Pages)"
+        subtitle="Manage the 5 menu links shown inside the hamburger drawer (Home, Praying the Word, Queens Community, Newsletter, Buy Our Books). You can reorder, rename, or toggle visibility."
       >
         <div className="space-y-2.5">
           {header.navItems.map((item, index) => (
